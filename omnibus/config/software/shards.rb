@@ -48,6 +48,6 @@ relative_path "shards-#{version}"
 env = with_standard_compiler_flags(with_embedded_path)
 
 build do
-  make "bin/shards SHARDS=false CRYSTAL=#{install_dir}/bin/crystal FLAGS='--no-debug --release'", env: env
+  make "bin/shards SHARDS=false CRYSTAL=#{install_dir}/bin/crystal FLAGS='--no-debug --release' static=1", env: env
   command "cp bin/shards #{install_dir}/embedded/bin/shards"
 end
