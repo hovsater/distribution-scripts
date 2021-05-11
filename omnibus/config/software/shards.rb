@@ -48,6 +48,9 @@ relative_path "shards-#{version}"
 env = with_standard_compiler_flags(with_embedded_path)
 
 build do
-  make "bin/shards SHARDS=false CRYSTAL=#{install_dir}/bin/crystal FLAGS='--no-debug --release' static=1", env: env
+  mkdir "#{project_dir}/static-libraries"
+  link "#{install_dir}/embedded/lib/*.a" "#{project_dir}/static-libraries/"
+  make "bin/shards SHARDS=false CRYSTAL=#{install_dir}/bin/crystal FLAGS='--no-debug --release' --link-flags='-L #{project_dir}/static-libraries'", env: env
+  command "otool -L bin/shards"
   command "cp bin/shards #{install_dir}/embedded/bin/shards"
 end
